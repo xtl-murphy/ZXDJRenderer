@@ -78,7 +78,7 @@ int main()
     Device device;
 
     float alpha = 1;
-    float pos = 3.0;
+    //float pos = 3.0;
 
     int width = 800;
     int height = 600;

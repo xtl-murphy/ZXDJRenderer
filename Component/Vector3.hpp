@@ -155,6 +155,6 @@ public:
     }
 };
 
-extern const Vector3 kZeroVector(0.0f, 0.0f, 0.0f);
+//extern const Vector3 kZeroVector(0.0f, 0.0f, 0.0f);
 
 #endif //ZXDJRENDERER_VECTOR3_HPP
