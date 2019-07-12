@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -fPIC -Wall -Wno-deprecat
 
 include_directories(${LOCAL_PATH})
 
-file(GLOB_RECURSE H_FILE "${LOCAL_PATH}/*.h")
+file(GLOB_RECURSE STB_FILE "${LOCAL_PATH}/external/stb/*.h")
 file(GLOB_RECURSE CPP_FILE "${LOCAL_PATH}/Component/*.cpp")
 
-add_executable(ZXDJRenderer main.cpp ${CPP_FILE} ${LOCAL_PATH}/stb_image_write.h Component/Vector3.cpp Component/Vector3.hpp Component/MathUtil.cpp Component/MathUtil.hpp Component/math/fft.cpp Component/math/fft.hpp)
+add_executable(ZXDJRenderer main.cpp ${CPP_FILE} ${STB_FILE})

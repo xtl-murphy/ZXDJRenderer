@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
+#include <windows.h>
 
 #include "Component/Device.hpp"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "external/stb/stb_image_write.h"
 
 unsigned char *screen_fb = NULL;
 
@@ -73,12 +74,12 @@ void draw_box(Device *device, float theta)
 
 int main()
 {
-    const char* outputFilePath = "/Users/murphy/Documents/git_work/ZXDJRenderer/out.png";
+    const char* outputFilePath = "C:/Documents/WorkSpace/ZXDJRenderer/out.png";
 
     Device device;
 
     float alpha = 1;
-    //float pos = 3.0;
+    float pos = 3.0;
 
     int width = 800;
     int height = 600;
@@ -88,7 +89,7 @@ int main()
 
     device_init(&device, width, height, outPutBuffer);
 //    camera_at_zero(&device, 3, 0, 0);
-//    init_texture(&device);
+    init_texture(&device);
     device.render_state = RENDER_STATE_WIREFRAME;
 
     device_clear(&device, 0);

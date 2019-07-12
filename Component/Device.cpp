@@ -112,7 +112,7 @@ void device_pixel(Device *device, int x, int y, IUINT32 color)
 {
     if (((IUINT32) x) < (IUINT32) device->width && ((IUINT32) y) < (IUINT32) device->height)
     {
-        LOGE("Device", "x = %d, y = %d", x, y);
+//        LOGE("Device", "x = %d, y = %d", x, y);
         device->framebuffer[y][x] = rgba2Color(255, 0, 0, 255);
     }
 }
