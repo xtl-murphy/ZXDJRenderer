@@ -46,7 +46,7 @@ void device_init(Device *device, int width, int height, void *fb)
     device->width = width;
     device->height = height;
 //    device->background = 0xc0c0c0;
-    device->background = rgba2Color(255, 255, 255, 255);
+    device->background = rgba2Color(0, 0, 0, 0);
     device->foreground = rgba2Color(255, 255, 0, 255);;
     transform_init(&device->transform, width, height);
     device->render_state = RENDER_STATE_WIREFRAME;
@@ -89,23 +89,11 @@ void device_clear(Device *device, int mode)
         }
         for (x = device->width; x > 0; dst++, x--)
         {
-//            dst[0] = rgba2Color(255, 0, 0, 255);
             dst[0] = cc;
         }
 
-//        for (int i = 0; i < device->width; i++)
-//        {
-//            dst[2] = rgba2Color(0, 255, 0, 255);
-//        }
     }
-//    for (y = 0; y < device->height; y++)
-//    {
-//        float *dst = device->zbuffer[y];
-//        for (x = device->width; x > 0; dst++, x--)
-//        {
-//            dst[0] = 0.0f;
-//        }
-//    }
+
 }
 
 void device_pixel(Device *device, int x, int y, IUINT32 color)
