@@ -30,12 +30,15 @@ private:
     SDL_Surface*  surface;
     bool          running;
 
+    char* tempPtr;
     Device device;
 
     int onInit();
 
     void onEvent(SDL_Event* event);
     void onRender();
+
+    void onKeyPress(SDL_Keycode key);
 
 };
 

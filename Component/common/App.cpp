@@ -99,18 +99,26 @@ App::App():window(nullptr), renderer(nullptr), running(false)
 
 App::~App()
 {
-
-
     device_destroy(&this->device);
+
+    free(this->tempPtr);
+
+    if (this->surface != nullptr)
+    {
+        SDL_FreeSurface(this->surface);
+        this->surface = NULL;
+    }
 
     if (renderer != nullptr)
     {
         SDL_DestroyRenderer(renderer);
+        this->renderer = NULL;
     }
 
     if (window != nullptr)
     {
         SDL_DestroyWindow(window);
+        this->window = NULL;
     }
 
     SDL_Quit();
@@ -142,7 +150,6 @@ int App::onPostExecute()
         this->onRender();
         LOGE("App", "fps %d", int(1 / dt));
         _time = currentTime;
-
     }
 
     return 1;
@@ -159,15 +166,17 @@ int App::onInit()
     this->window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                     WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 
+
     if (this->window != nullptr)
     {
         this->surface = SDL_GetWindowSurface(this->window);
 
-
-
         this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
 
-        device_init(&device, WINDOW_WIDTH, WINDOW_HEIGHT, surface->pixels);
+
+        this->tempPtr = (char *)malloc(WINDOW_WIDTH * WINDOW_WIDTH * 4);
+
+        device_init(&device, WINDOW_WIDTH, WINDOW_HEIGHT, this->tempPtr);
         camera_at_zero(&device, 3, 0, 0);
         init_texture(&device);
         device.render_state = RENDER_STATE_WIREFRAME;
@@ -185,26 +194,68 @@ void App::onEvent(SDL_Event *event)
             this->running = false;
             break;
         case SDL_KEYDOWN:
-            //event->key.keysym.sym
+            this->onKeyPress(event->key.keysym.sym);
             break;
         default:
             break;
     }
 }
 
+float x = 3, y = 2, z = 0;
+
 void App::onRender()
 {
     SDL_RenderClear(this->renderer);
 
 
-    SDL_LockSurface(this->surface);
-
     device_clear(&device, 0);
-    camera_at_zero(&device, 3, 2, 0);
+//    camera_at_zero(&device, 3, 2, 0);
+    camera_at_zero(&device, x, y, z);
     draw_box(&device, 1);
 
+    SDL_LockSurface(this->surface);
+    memcpy(this->surface->pixels, this->tempPtr, WINDOW_WIDTH * WINDOW_HEIGHT * 4);
     SDL_UnlockSurface(this->surface);
 
     SDL_UpdateWindowSurface(this->window);
-    SDL_RenderPresent(this->renderer);
+    //SDL_RenderPresent(this->renderer);
+}
+
+void App::onKeyPress(SDL_Keycode key)
+{
+    float offset = 0.05;
+    switch (key)
+    {
+        case SDLK_ESCAPE:
+            this->running = false;
+            break;
+        case SDLK_w:
+            //前
+            break;
+        case SDLK_s:
+            //后
+            break;
+        case SDLK_a:
+            //左
+            break;
+        case SDLK_d:
+            //右
+            break;
+        case SDLK_z:
+            //上
+            break;
+        case SDLK_x:
+            //下
+            break;
+        case SDLK_UP:
+            break;
+        case SDLK_DOWN:
+            break;
+        case SDLK_LEFT:
+            y += offset;
+            break;
+        case SDLK_RIGHT:
+            y -= offset;
+            break;
+    }
 }
