@@ -10,7 +10,7 @@
 #include "SDL2/SDL.h"
 
 
-#include "Component/Device.hpp"
+#include "component/Device.hpp"
 
 #include "component/common/App.hpp"
 

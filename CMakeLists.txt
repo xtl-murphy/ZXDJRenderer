@@ -10,7 +10,7 @@ include_directories(${LOCAL_PATH}/libs/sdl2/include)
 
 
 file(GLOB_RECURSE STB_FILE "${LOCAL_PATH}/external/stb/*.h")
-file(GLOB_RECURSE CPP_FILE "${LOCAL_PATH}/Component/*.cpp")
+file(GLOB_RECURSE CPP_FILE "${LOCAL_PATH}/component/*.cpp")
 
 
 
