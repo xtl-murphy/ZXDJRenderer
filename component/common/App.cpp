@@ -33,7 +33,7 @@ long getCurrentMillSecond()
 
 void camera_at_zero(Device *device, float x, float y, float z)
 {
-    Point eye = {x, y, z, 1}, at = {0, 0, 0, 1}, up = {0, 0, 1, 1};
+    Point eye = {x, y, z, 1}, at = {0, 0, 0, 1}, up = {0, 1, 0, 1};
     matrix_set_lookat(&device->transform.view, &eye, &at, &up);
     transform_update(&device->transform);
 }
@@ -148,7 +148,7 @@ int App::onPostExecute()
             onEvent(&event);
         }
         this->onRender();
-        LOGE("App", "fps %d", int(1 / dt));
+        //LOGE("App", "fps %d", int(1 / dt));
         _time = currentTime;
     }
 
@@ -201,7 +201,7 @@ void App::onEvent(SDL_Event *event)
     }
 }
 
-float x = 3, y = 2, z = 0;
+float x = 0, y = 0, z = 3;
 
 void App::onRender()
 {
@@ -209,7 +209,6 @@ void App::onRender()
 
 
     device_clear(&device, 0);
-//    camera_at_zero(&device, 3, 2, 0);
     camera_at_zero(&device, x, y, z);
     draw_box(&device, 1);
 
@@ -248,14 +247,16 @@ void App::onKeyPress(SDL_Keycode key)
             //下
             break;
         case SDLK_UP:
-            break;
-        case SDLK_DOWN:
-            break;
-        case SDLK_LEFT:
             y += offset;
             break;
-        case SDLK_RIGHT:
+        case SDLK_DOWN:
             y -= offset;
+            break;
+        case SDLK_LEFT:
+            x -= offset;
+            break;
+        case SDLK_RIGHT:
+            x += offset;
             break;
     }
 }

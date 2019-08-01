@@ -128,11 +128,20 @@ void matrix_set_lookat(Matrix *m, const Vector *eye, const Vector *at, const Vec
 {
     Vector xaxis, yaxis, zaxis;
 
+    //叉乘的结果是得到两个向量的垂直向量
+    //得到Z轴向量
     vector_sub(&zaxis, at, eye);
     vector_normalize(&zaxis);
+    //Y轴单位向量与Z轴叉乘得到X轴向量
     vector_crossproduct(&xaxis, up, &zaxis);
     vector_normalize(&xaxis);
+
+    //有了X 和 Z 叉乘就能得到Y向量
     vector_crossproduct(&yaxis, &zaxis, &xaxis);
+
+    //由此得到摄像机位置
+
+    //下方的点乘处理是把摄像机平移到其所在位置
 
     m->m[0][0] = xaxis.x;
     m->m[1][0] = xaxis.y;
